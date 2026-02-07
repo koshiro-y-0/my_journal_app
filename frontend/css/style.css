@@ -1,0 +1,320 @@
+/* ============================================
+   My Journal App - スタイルシート
+   テーマ: 温かみのあるアースカラー
+   ============================================ */
+
+/* === CSS変数（カラーパレット） === */
+:root {
+    --color-bg: #FAF6F1;
+    --color-bg-alt: #F3ECE4;
+    --color-card: #FFFFFF;
+    --color-primary: #C07A50;
+    --color-primary-hover: #A8653D;
+    --color-primary-light: #E8D5C4;
+    --color-text: #4A3728;
+    --color-text-light: #8B7462;
+    --color-text-muted: #B8A494;
+    --color-border: #E2D5C8;
+    --color-success: #6B9E6B;
+    --color-error: #C75050;
+    --color-white: #FFFFFF;
+    --font-main: 'Noto Sans JP', 'M PLUS Rounded 1c', sans-serif;
+    --shadow-sm: 0 1px 3px rgba(74, 55, 40, 0.08);
+    --shadow-md: 0 4px 12px rgba(74, 55, 40, 0.1);
+    --shadow-lg: 0 8px 24px rgba(74, 55, 40, 0.12);
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+}
+
+/* === リセット・ベース === */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    line-height: 1.7;
+    min-height: 100vh;
+}
+
+/* === 認証ページ === */
+.auth-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.auth-container {
+    width: 100%;
+    max-width: 420px;
+}
+
+.auth-card {
+    background: var(--color-card);
+    border-radius: var(--radius-lg);
+    padding: 40px 32px;
+    box-shadow: var(--shadow-lg);
+}
+
+.auth-title {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: 4px;
+}
+
+.auth-subtitle {
+    text-align: center;
+    color: var(--color-text-light);
+    font-size: 14px;
+    margin-bottom: 28px;
+}
+
+/* === タブ切り替え === */
+.auth-tabs {
+    display: flex;
+    gap: 4px;
+    background: var(--color-bg-alt);
+    border-radius: var(--radius-sm);
+    padding: 4px;
+    margin-bottom: 24px;
+}
+
+.auth-tab {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    background: transparent;
+    border-radius: 6px;
+    font-family: var(--font-main);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-text-light);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.auth-tab.active {
+    background: var(--color-card);
+    color: var(--color-text);
+    box-shadow: var(--shadow-sm);
+}
+
+/* === フォーム === */
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-text-light);
+}
+
+.form-group input {
+    padding: 12px 14px;
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-main);
+    font-size: 15px;
+    color: var(--color-text);
+    background: var(--color-white);
+    transition: border-color 0.2s;
+    outline: none;
+}
+
+.form-group input:focus {
+    border-color: var(--color-primary);
+}
+
+.form-group input::placeholder {
+    color: var(--color-text-muted);
+}
+
+/* === ボタン === */
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-main);
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-primary {
+    background: var(--color-primary);
+    color: var(--color-white);
+}
+
+.btn-primary:hover {
+    background: var(--color-primary-hover);
+}
+
+.btn-google {
+    width: 100%;
+    background: var(--color-white);
+    color: var(--color-text);
+    border: 1.5px solid var(--color-border);
+}
+
+.btn-google:hover {
+    background: var(--color-bg);
+}
+
+/* === 区切り線 === */
+.auth-divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 20px 0;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--color-border);
+}
+
+.auth-divider span {
+    font-size: 12px;
+    color: var(--color-text-muted);
+}
+
+/* === メッセージ === */
+.auth-error {
+    margin-top: 16px;
+    padding: 12px;
+    background: #FFF0F0;
+    border: 1px solid #F5C6C6;
+    border-radius: var(--radius-sm);
+    color: var(--color-error);
+    font-size: 13px;
+    text-align: center;
+}
+
+.auth-success {
+    margin-top: 16px;
+    padding: 12px;
+    background: #F0F7F0;
+    border: 1px solid #C6DFC6;
+    border-radius: var(--radius-sm);
+    color: var(--color-success);
+    font-size: 13px;
+    text-align: center;
+}
+
+/* === メインアプリ画面 === */
+.app-page {
+    min-height: 100vh;
+}
+
+/* ヘッダー */
+.app-header {
+    background: var(--color-card);
+    border-bottom: 1px solid var(--color-border);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: var(--shadow-sm);
+}
+
+.app-header h1 {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.header-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.header-user span {
+    font-size: 13px;
+    color: var(--color-text-light);
+}
+
+.btn-logout {
+    padding: 6px 16px;
+    background: transparent;
+    color: var(--color-text-light);
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-main);
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-logout:hover {
+    background: var(--color-bg-alt);
+    color: var(--color-text);
+}
+
+/* メインレイアウト（3カラム） */
+.app-main {
+    display: grid;
+    grid-template-columns: 300px 1fr 300px;
+    gap: 20px;
+    padding: 20px 24px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* カード共通 */
+.card {
+    background: var(--color-card);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    box-shadow: var(--shadow-sm);
+}
+
+.card-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: var(--color-text);
+}
+
+/* === レスポンシブ === */
+@media (max-width: 1024px) {
+    .app-main {
+        grid-template-columns: 1fr;
+        padding: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .auth-card {
+        padding: 28px 20px;
+    }
+
+    .auth-title {
+        font-size: 24px;
+    }
+}

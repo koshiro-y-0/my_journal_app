@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Journal - ログイン</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=M+PLUS+Rounded+1c:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="auth-page">
+    <div class="auth-container">
+        <div class="auth-card">
+            <h1 class="auth-title">📖 My Journal</h1>
+            <p class="auth-subtitle">今日の出来事を、ここに。</p>
+
+            <!-- タブ切り替え -->
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-tab="login">ログイン</button>
+                <button class="auth-tab" data-tab="signup">新規登録</button>
+            </div>
+
+            <!-- ログインフォーム -->
+            <form id="login-form" class="auth-form">
+                <div class="form-group">
+                    <label for="login-email">メールアドレス</label>
+                    <input type="email" id="login-email" placeholder="example@mail.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">パスワード</label>
+                    <input type="password" id="login-password" placeholder="パスワード" required>
+                </div>
+                <button type="submit" class="btn btn-primary">ログイン</button>
+            </form>
+
+            <!-- サインアップフォーム -->
+            <form id="signup-form" class="auth-form" style="display: none;">
+                <div class="form-group">
+                    <label for="signup-email">メールアドレス</label>
+                    <input type="email" id="signup-email" placeholder="example@mail.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">パスワード</label>
+                    <input type="password" id="signup-password" placeholder="6文字以上" minlength="6" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-password-confirm">パスワード（確認）</label>
+                    <input type="password" id="signup-password-confirm" placeholder="もう一度入力" minlength="6" required>
+                </div>
+                <button type="submit" class="btn btn-primary">アカウント作成</button>
+            </form>
+
+            <!-- 区切り線 -->
+            <div class="auth-divider">
+                <span>または</span>
+            </div>
+
+            <!-- Googleログイン -->
+            <button id="google-login-btn" class="btn btn-google">
+                <svg width="18" height="18" viewBox="0 0 48 48">
+                    <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+                    <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+                    <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+                    <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+                </svg>
+                Googleでログイン
+            </button>
+
+            <!-- エラーメッセージ -->
+            <div id="auth-error" class="auth-error" style="display: none;"></div>
+            <!-- 成功メッセージ -->
+            <div id="auth-success" class="auth-success" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

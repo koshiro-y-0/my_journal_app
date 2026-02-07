@@ -30,13 +30,13 @@
 - [ ] 3-2. Supabase AuthのGoogle OAuth認証を設定 ※手動
   - Google Cloud ConsoleでOAuthクライアントID取得
   - SupabaseにGoogle Provider設定
-- [ ] 3-3. Django側：認証ミドルウェア作成（Supabase JWTトークン検証）
-- [ ] 3-4. Django側：認証関連のエンドポイント作成（`authentication/`アプリ）
-- [ ] 3-5. フロントエンド：ログイン画面のHTML/CSS作成（`index.html`）
+- [x] 3-3. Django側：認証ミドルウェア作成（Supabase JWTトークン検証）
+- [x] 3-4. Django側：認証関連のエンドポイント作成（`authentication/`アプリ）
+- [x] 3-5. フロントエンド：ログイン画面のHTML/CSS作成（`index.html`）
   - メール+パスワードフォーム
   - Googleログインボタン
   - サインアップフォーム
-- [ ] 3-6. フロントエンド：`auth.js` 実装
+- [x] 3-6. フロントエンド：`auth.js` 実装
   - Supabase Auth JS SDKでログイン/サインアップ/ログアウト
   - 認証状態の監視・リダイレクト処理
   - トークンの保存・Django APIリクエスト時にヘッダー付与

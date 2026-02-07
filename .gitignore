@@ -3,6 +3,7 @@
 
 # Supabase config
 js/config.js
+frontend/js/config.js
 
 # OS files
 .DS_Store
