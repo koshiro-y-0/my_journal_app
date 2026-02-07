@@ -26,8 +26,8 @@
 ---
 
 ### STEP 3: 認証機能
-- [ ] 3-1. Supabase Authのメール/パスワード認証を有効化 ※手動
-- [ ] 3-2. Supabase AuthのGoogle OAuth認証を設定 ※手動
+- [x] 3-1. Supabase Authのメール/パスワード認証を有効化 ※手動
+- [x] 3-2. Supabase AuthのGoogle OAuth認証を設定 ※手動
   - Google Cloud ConsoleでOAuthクライアントID取得
   - SupabaseにGoogle Provider設定
 - [x] 3-3. Django側：認証ミドルウェア作成（Supabase JWTトークン検証）
