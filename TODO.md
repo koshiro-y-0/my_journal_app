@@ -5,21 +5,21 @@
 ---
 
 ### STEP 1: 環境構築・プロジェクト初期設定
-- [ ] 1-1. Djangoプロジェクトの作成（`backend/config`）
-- [ ] 1-2. Django必要パッケージのインストール・`requirements.txt` 作成
+- [x] 1-1. Djangoプロジェクトの作成（`backend/config`）
+- [x] 1-2. Django必要パッケージのインストール・`requirements.txt` 作成
   - Django, djangorestframework, django-cors-headers, supabase-py, python-dotenv
-- [ ] 1-3. `.env` ファイルの作成（テンプレート）
-- [ ] 1-4. Django settings.py の基本設定（CORS、REST framework、環境変数読み込み）
-- [ ] 1-5. フロントエンドのディレクトリ構成作成（`frontend/`配下）
+- [x] 1-3. `.env` ファイルの作成（テンプレート）
+- [x] 1-4. Django settings.py の基本設定（CORS、REST framework、環境変数読み込み）
+- [x] 1-5. フロントエンドのディレクトリ構成作成（`frontend/`配下）
 - [ ] 1-6. Supabaseプロジェクトの作成・接続情報の取得 ※手動作業
 
 ---
 
 ### STEP 2: Supabase データベース・ストレージ設定
-- [ ] 2-1. Supabaseで `journals` テーブルを作成 ※手動 or SQL
+- [x] 2-1. Supabaseで `journals` テーブルを作成 ※手動 or SQL
   - id (uuid), user_id (uuid), content (text), mood_score (integer), image_url (text), date (date), created_at, updated_at
   - ユニーク制約: user_id + date
-- [ ] 2-2. RLSポリシーの設定（自分のデータのみアクセス可能）
+- [x] 2-2. RLSポリシーの設定（自分のデータのみアクセス可能）
 - [ ] 2-3. Supabase Storageバケットの作成（画像保存用） ※手動
 - [ ] 2-4. Storageのアクセスポリシー設定（認証ユーザーのみアップロード可）
 
