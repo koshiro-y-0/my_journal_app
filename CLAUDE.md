@@ -138,6 +138,7 @@ my_journal_app/
 - ブランチ戦略: main + feature ブランチ
 - 環境変数は `.env` で管理（.gitignoreに追加）
 - Supabaseの接続情報・APIキーは絶対にコミットしない
+- **作業完了時は必ずGitHubにpushしてログを残す**
 
 ## 環境変数（.env）
 ```
