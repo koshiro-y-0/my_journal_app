@@ -44,17 +44,17 @@
 ---
 
 ### STEP 4: 日記CRUD機能（バックエンド）
-- [ ] 4-1. Django `journal` アプリの作成
-- [ ] 4-2. `models.py`：Journalモデル定義（Supabase DBと対応）
-- [ ] 4-3. `serializers.py`：日記データのシリアライザー作成
-- [ ] 4-4. `views.py`：日記APIエンドポイント作成
+- [x] 4-1. Django `journal` アプリの作成
+- [x] 4-2. `models.py`：Journalモデル定義（Supabase DBと対応）
+- [x] 4-3. `serializers.py`：日記データのシリアライザー作成
+- [x] 4-4. `views.py`：日記APIエンドポイント作成
   - POST `/api/journals/` - 日記作成（1日1件チェック）
   - GET `/api/journals/` - 日記一覧取得（月別フィルタ対応）
   - GET `/api/journals/<id>/` - 日記詳細取得
   - PUT `/api/journals/<id>/` - 日記編集
   - DELETE `/api/journals/<id>/` - 日記削除
-- [ ] 4-5. `urls.py`：ルーティング設定
-- [ ] 4-6. 画像アップロード処理（Supabase Storageへのアップロード・URL返却）
+- [x] 4-5. `urls.py`：ルーティング設定
+- [x] 4-6. 画像アップロード処理（Supabase Storageへのアップロード・URL返却）
 
 ---
 
