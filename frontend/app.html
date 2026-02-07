@@ -32,11 +32,74 @@
 
         <!-- 中央: 日記投稿・閲覧 -->
         <section class="card" id="journal-section">
-            <h2 class="card-title">今日の日記</h2>
-            <div id="journal-container">
-                <!-- STEP 5で実装 -->
-                <p style="color: var(--color-text-muted); font-size: 14px;">日記機能は準備中です</p>
+            <div id="journal-header">
+                <h2 class="card-title" id="journal-title">今日の日記</h2>
+                <span id="journal-date-display"></span>
             </div>
+
+            <!-- 日記投稿フォーム -->
+            <div id="journal-form-container">
+                <form id="journal-form">
+                    <div class="journal-form-group">
+                        <label for="journal-content">今日の出来事</label>
+                        <textarea id="journal-content" placeholder="今日はどんな一日でしたか？" rows="6"></textarea>
+                    </div>
+
+                    <div class="journal-form-group">
+                        <label>今日の気分</label>
+                        <div id="mood-selector">
+                            <input type="range" id="mood-score" min="1" max="10" value="5">
+                            <div class="mood-labels">
+                                <span>1</span>
+                                <span id="mood-value">5</span>
+                                <span>10</span>
+                            </div>
+                            <div class="mood-emoji" id="mood-emoji"></div>
+                        </div>
+                    </div>
+
+                    <div class="journal-form-group">
+                        <label for="journal-image">画像（任意）</label>
+                        <div id="image-upload-area">
+                            <input type="file" id="journal-image" accept="image/jpeg,image/png,image/gif,image/webp" hidden>
+                            <button type="button" id="image-select-btn" class="btn btn-outline">画像を選択</button>
+                            <div id="image-preview-container" style="display: none;">
+                                <img id="image-preview" alt="プレビュー">
+                                <button type="button" id="image-remove-btn" class="btn-icon" title="画像を削除">&times;</button>
+                            </div>
+                            <div id="image-upload-progress" style="display: none;">
+                                <div class="progress-bar"><div class="progress-fill"></div></div>
+                                <span>アップロード中...</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="journal-form-actions">
+                        <button type="submit" id="journal-submit-btn" class="btn btn-primary">日記を保存</button>
+                        <button type="button" id="journal-cancel-btn" class="btn btn-outline" style="display: none;">キャンセル</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- 日記表示エリア -->
+            <div id="journal-view-container" style="display: none;">
+                <div id="journal-view-content"></div>
+                <div id="journal-view-mood"></div>
+                <div id="journal-view-image"></div>
+                <div class="journal-view-actions">
+                    <button id="journal-edit-btn" class="btn btn-outline">編集</button>
+                    <button id="journal-delete-btn" class="btn btn-danger">削除</button>
+                </div>
+            </div>
+
+            <!-- ローディング -->
+            <div id="journal-loading" style="display: none;">
+                <div class="loading-spinner"></div>
+                <p>読み込み中...</p>
+            </div>
+
+            <!-- メッセージ -->
+            <div id="journal-message" style="display: none;"></div>
         </section>
 
         <!-- 右: 気分分析グラフ -->
@@ -51,6 +114,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/config.js"></script>
+    <script src="js/journal.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>

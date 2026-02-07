@@ -5,7 +5,7 @@
 
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// === 認証チェック ===
+// === 認証チェック・アプリ初期化 ===
 (async () => {
     const { data: { session } } = await supabase.auth.getSession();
 
@@ -19,6 +19,11 @@ const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     const userEmailEl = document.getElementById('user-email');
     if (userEmailEl) {
         userEmailEl.textContent = session.user.email;
+    }
+
+    // 日記機能を初期化
+    if (typeof initJournal === 'function') {
+        initJournal();
     }
 })();
 
