@@ -11,7 +11,7 @@
 - [x] 1-3. `.env` ファイルの作成（テンプレート）
 - [x] 1-4. Django settings.py の基本設定（CORS、REST framework、環境変数読み込み）
 - [x] 1-5. フロントエンドのディレクトリ構成作成（`frontend/`配下）
-- [ ] 1-6. Supabaseプロジェクトの作成・接続情報の取得 ※手動作業
+- [x] 1-6. Supabaseプロジェクトの作成・接続情報の取得 ※手動作業
 
 ---
 
@@ -20,8 +20,8 @@
   - id (uuid), user_id (uuid), content (text), mood_score (integer), image_url (text), date (date), created_at, updated_at
   - ユニーク制約: user_id + date
 - [x] 2-2. RLSポリシーの設定（自分のデータのみアクセス可能）
-- [ ] 2-3. Supabase Storageバケットの作成（画像保存用） ※手動
-- [ ] 2-4. Storageのアクセスポリシー設定（認証ユーザーのみアップロード可）
+- [x] 2-3. Supabase Storageバケットの作成（画像保存用） ※手動
+- [x] 2-4. Storageのアクセスポリシー設定（認証ユーザーのみアップロード可）
 
 ---
 
