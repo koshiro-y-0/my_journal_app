@@ -25,6 +25,11 @@ const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     if (typeof initJournal === 'function') {
         initJournal();
     }
+
+    // カレンダーを初期化
+    if (typeof initCalendar === 'function') {
+        initCalendar();
+    }
 })();
 
 // === 認証状態の変化を監視 ===
