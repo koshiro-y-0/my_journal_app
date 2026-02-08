@@ -761,6 +761,75 @@ body {
     color: var(--color-text-muted);
 }
 
+/* === 気分分析グラフ === */
+.mood-chart-wrapper {
+    width: 100%;
+}
+
+.mood-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.mood-month-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.mood-chart-container {
+    position: relative;
+    height: 200px;
+    width: 100%;
+}
+
+.mood-no-data {
+    text-align: center;
+    padding: 30px 0;
+    color: var(--color-text-muted);
+    font-size: 13px;
+}
+
+/* 月平均カード */
+.mood-avg-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 12px;
+    padding: 10px 14px;
+    background: var(--color-bg);
+    border-radius: var(--radius-sm);
+}
+
+.mood-avg-emoji {
+    font-size: 24px;
+}
+
+.mood-avg-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.mood-avg-label {
+    font-size: 11px;
+    color: var(--color-text-muted);
+}
+
+.mood-avg-value {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--color-primary);
+    line-height: 1.2;
+}
+
+.mood-avg-count {
+    font-size: 12px;
+    color: var(--color-text-muted);
+}
+
 /* === レスポンシブ === */
 @media (max-width: 1024px) {
     .app-main {
@@ -776,6 +845,10 @@ body {
     .calendar-header {
         max-width: 350px;
         margin: 0 auto 4px;
+    }
+
+    .mood-chart-container {
+        height: 250px;
     }
 }
 

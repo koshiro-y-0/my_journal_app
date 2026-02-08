@@ -30,6 +30,11 @@ const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     if (typeof initCalendar === 'function') {
         initCalendar();
     }
+
+    // 気分グラフを初期化
+    if (typeof initMoodChart === 'function') {
+        initMoodChart();
+    }
 })();
 
 // === 認証状態の変化を監視 ===
