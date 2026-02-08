@@ -244,10 +244,11 @@ async function saveJournal() {
             throw new Error(data.error || '保存に失敗しました');
         }
 
+        const wasEditing = isEditing;
         currentJournal = data;
         isEditing = false;
         showJournalView(data);
-        showJournalMessage(isEditing ? '日記を更新しました' : '日記を保存しました', 'success');
+        showJournalMessage(wasEditing ? '日記を更新しました' : '日記を保存しました', 'success');
 
         // カレンダーの更新を通知（STEP 6で実装）
         if (typeof refreshCalendar === 'function') {
@@ -337,7 +338,12 @@ function showJournalView(journal) {
     // 画像
     const imageEl = document.getElementById('journal-view-image');
     if (journal.image_url) {
-        imageEl.innerHTML = `<img src="${journal.image_url}" alt="日記の画像" class="journal-image">`;
+        imageEl.innerHTML = '';
+        const img = document.createElement('img');
+        img.src = journal.image_url;
+        img.alt = '日記の画像';
+        img.className = 'journal-image';
+        imageEl.appendChild(img);
     } else {
         imageEl.innerHTML = '';
     }
@@ -380,8 +386,10 @@ function resetForm() {
 
 function showLoading(show) {
     document.getElementById('journal-loading').style.display = show ? 'flex' : 'none';
-    document.getElementById('journal-form-container').style.display = show ? 'none' : 'block';
-    document.getElementById('journal-view-container').style.display = 'none';
+    if (show) {
+        document.getElementById('journal-form-container').style.display = 'none';
+        document.getElementById('journal-view-container').style.display = 'none';
+    }
 }
 
 function showJournalMessage(message, type) {

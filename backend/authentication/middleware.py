@@ -27,7 +27,9 @@ class SupabaseAuthentication(BaseAuthentication):
         token = auth_header.split('Bearer ')[1]
 
         try:
-            # Supabase JWTをデコード（開発時は署名検証をスキップ）
+            # Supabase JWTをデコード
+            # TODO: 本番環境ではSupabaseのJWTシークレットで署名検証を有効化すること
+            # options={"verify_signature": True} + key=settings.SUPABASE_JWT_SECRET
             payload = jwt.decode(
                 token,
                 options={"verify_signature": False},

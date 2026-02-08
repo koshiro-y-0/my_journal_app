@@ -2,6 +2,7 @@
 日記CRUD APIビュー
 Supabase PostgreSQLに対してCRUD操作を行う
 """
+import re
 import uuid
 from rest_framework.decorators import api_view, permission_classes, parser_classes
 from rest_framework.permissions import IsAuthenticated
@@ -12,6 +13,13 @@ from django.conf import settings
 
 from .serializers import JournalSerializer
 from .supabase_client import get_supabase_client
+
+
+def _validate_month(month):
+    """月パラメータのバリデーション（YYYY-MM形式）"""
+    if not re.match(r'^\d{4}-(0[1-9]|1[0-2])$', month):
+        return False
+    return True
 
 
 @api_view(['GET', 'POST'])
@@ -108,7 +116,7 @@ def mood_stats(request):
     user_id = request.user.id
     month = request.query_params.get('month')  # YYYY-MM形式
 
-    if not month:
+    if not month or not _validate_month(month):
         return Response({'error': 'monthパラメータが必要です（YYYY-MM形式）'}, status=status.HTTP_400_BAD_REQUEST)
 
     try:
@@ -157,6 +165,8 @@ def _get_journals(supabase, user_id, request):
         # 月別フィルタ
         month = request.query_params.get('month')
         if month:
+            if not _validate_month(month):
+                return Response({'error': 'month形式が不正です（YYYY-MM）'}, status=status.HTTP_400_BAD_REQUEST)
             year, mon = month.split('-')
             start_date = f"{year}-{mon}-01"
             if int(mon) == 12:

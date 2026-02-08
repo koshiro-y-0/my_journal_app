@@ -119,18 +119,6 @@ supabase.auth.onAuthStateChange((event, session) => {
 
 // === ユーティリティ関数 ===
 
-/**
- * Django APIにリクエストを送る際のヘッダーを取得
- */
-async function getAuthHeaders() {
-    const { data: { session } } = await supabase.auth.getSession();
-    if (!session) return {};
-    return {
-        'Authorization': `Bearer ${session.access_token}`,
-        'Content-Type': 'application/json',
-    };
-}
-
 function showError(message) {
     const el = document.getElementById('auth-error');
     el.textContent = message;
