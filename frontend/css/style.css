@@ -17,6 +17,7 @@
     --color-border: #E2D5C8;
     --color-success: #6B9E6B;
     --color-error: #C75050;
+    --color-warning: #D4A843;
     --color-white: #FFFFFF;
     --font-main: 'Noto Sans JP', 'M PLUS Rounded 1c', sans-serif;
     --shadow-sm: 0 1px 3px rgba(74, 55, 40, 0.08);
@@ -34,12 +35,24 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: var(--font-main);
     background-color: var(--color-bg);
     color: var(--color-text);
     line-height: 1.7;
     min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* フォーカスリング（アクセシビリティ） */
+:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
 }
 
 /* === 認証ページ === */
@@ -49,6 +62,7 @@ body {
     justify-content: center;
     min-height: 100vh;
     padding: 20px;
+    background: linear-gradient(135deg, var(--color-bg) 0%, var(--color-bg-alt) 50%, var(--color-primary-light) 100%);
 }
 
 .auth-container {
@@ -61,6 +75,7 @@ body {
     border-radius: var(--radius-lg);
     padding: 40px 32px;
     box-shadow: var(--shadow-lg);
+    animation: fadeIn 0.5s ease-out;
 }
 
 .auth-title {
@@ -170,6 +185,20 @@ body {
 
 .btn-primary:hover {
     background: var(--color-primary-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
 }
 
 .btn-google {
@@ -181,6 +210,12 @@ body {
 
 .btn-google:hover {
     background: var(--color-bg);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-google:active {
+    transform: translateY(0);
 }
 
 /* === 区切り線 === */
@@ -241,6 +276,9 @@ body {
     align-items: center;
     justify-content: space-between;
     box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
 .app-header h1 {
@@ -292,6 +330,19 @@ body {
     border-radius: var(--radius-md);
     padding: 20px;
     box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.2s;
+}
+
+.card:hover {
+    box-shadow: var(--shadow-md);
+}
+
+/* サイドバーカードはスクロール時に固定 */
+#calendar-section,
+#mood-section {
+    align-self: start;
+    position: sticky;
+    top: 76px;
 }
 
 .card-title {
@@ -299,6 +350,24 @@ body {
     font-weight: 600;
     margin-bottom: 16px;
     color: var(--color-text);
+}
+
+/* フェードインアニメーション */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.app-main > .card {
+    animation: fadeIn 0.4s ease-out;
+}
+
+.app-main > .card:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.app-main > .card:nth-child(3) {
+    animation-delay: 0.2s;
 }
 
 /* === 日記セクション === */
@@ -414,6 +483,11 @@ body {
 
 .btn-outline:hover {
     background: var(--color-primary-light);
+    transform: translateY(-1px);
+}
+
+.btn-outline:active {
+    transform: translateY(0);
 }
 
 #image-preview-container {
@@ -540,6 +614,11 @@ body {
 
 .btn-danger:hover {
     background: #B04040;
+    transform: translateY(-1px);
+}
+
+.btn-danger:active {
+    transform: translateY(0);
 }
 
 /* ローディング */
@@ -574,6 +653,7 @@ body {
     border-radius: var(--radius-sm);
     font-size: 13px;
     text-align: center;
+    animation: fadeIn 0.3s ease-out;
 }
 
 .journal-message-success {
@@ -831,10 +911,17 @@ body {
 }
 
 /* === レスポンシブ === */
+
+/* タブレット */
 @media (max-width: 1024px) {
     .app-main {
         grid-template-columns: 1fr;
         padding: 16px;
+    }
+
+    #calendar-section,
+    #mood-section {
+        position: static;
     }
 
     .calendar-grid {
@@ -850,8 +937,13 @@ body {
     .mood-chart-container {
         height: 250px;
     }
+
+    .journal-view-actions {
+        flex-wrap: wrap;
+    }
 }
 
+/* スマートフォン */
 @media (max-width: 480px) {
     .auth-card {
         padding: 28px 20px;
@@ -861,7 +953,49 @@ body {
         font-size: 24px;
     }
 
+    .app-header {
+        padding: 10px 16px;
+    }
+
+    .app-header h1 {
+        font-size: 17px;
+    }
+
+    .header-user span {
+        display: none;
+    }
+
+    .app-main {
+        padding: 12px;
+        gap: 12px;
+    }
+
+    .card {
+        padding: 16px;
+    }
+
     .cal-day {
         font-size: 12px;
+    }
+
+    .journal-form-actions {
+        flex-direction: column;
+    }
+
+    .journal-form-actions .btn {
+        width: 100%;
+    }
+
+    .journal-form-group textarea {
+        font-size: 14px;
+    }
+
+    #journal-view-content {
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    .mood-avg-card {
+        padding: 8px 12px;
     }
 }
