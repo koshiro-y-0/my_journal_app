@@ -5,15 +5,12 @@
 
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// === 認証チェック・アプリ初期化 ===
-(async () => {
-    const { data: { session } } = await supabaseClient.auth.getSession();
+let appInitialized = false;
 
-    if (!session) {
-        // 未ログイン → ログイン画面へ
-        window.location.href = 'index.html';
-        return;
-    }
+// === アプリ初期化関数 ===
+function initApp(session) {
+    if (appInitialized) return;
+    appInitialized = true;
 
     // ユーザーのメールアドレスを表示
     const userEmailEl = document.getElementById('user-email');
@@ -35,14 +32,35 @@ const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_
     if (typeof initMoodChart === 'function') {
         initMoodChart();
     }
-})();
+}
 
 // === 認証状態の変化を監視 ===
 supabaseClient.auth.onAuthStateChange((event, session) => {
-    if (event === 'SIGNED_OUT') {
+    if (event === 'SIGNED_IN' && session) {
+        initApp(session);
+    } else if (event === 'SIGNED_OUT') {
         window.location.href = 'index.html';
     }
 });
+
+// === 認証チェック・アプリ初期化 ===
+(async () => {
+    const { data: { session } } = await supabaseClient.auth.getSession();
+
+    if (session) {
+        initApp(session);
+    } else if (!window.location.hash) {
+        // ハッシュフラグメントがない = OAuthリダイレクト直後ではない → 未ログイン
+        window.location.href = 'index.html';
+    }
+    // ハッシュフラグメントがある場合はonAuthStateChangeがセッション確立を処理するのを待つ
+    // 5秒以内にセッションが確立されなければログイン画面に戻す
+    setTimeout(() => {
+        if (!appInitialized) {
+            window.location.href = 'index.html';
+        }
+    }, 5000);
+})();
 
 // === ログアウト ===
 document.getElementById('logout-btn').addEventListener('click', async () => {

@@ -50,9 +50,20 @@
 
 ---
 
-## 今回 - 新規登録タブでもGoogleボタンを使えるように
+## 新規登録タブでもGoogleボタンを使えるように
 
 | ファイル | 修正内容 | 重要度 |
 |---------|---------|--------|
 | `frontend/index.html:67` | Googleボタンのテキストを `<span id="google-btn-text">` で囲み、タブ切り替えでテキスト変更可能にした | LOW |
 | `frontend/js/auth.js:21-23` | タブ切り替え時にGoogleボタンのテキストを「Googleでログイン」/「Googleで新規登録」に切り替える処理を追加 | MEDIUM |
+
+---
+
+## 今回 - Googleログイン後にログイン画面に戻る問題 + 登録完了ページ追加
+
+| ファイル | 修正内容 | 重要度 |
+|---------|---------|--------|
+| `frontend/js/app.js` | Google OAuthリダイレクト直後、URLハッシュフラグメントからのセッション確立が完了する前に `getSession()` → `null` → `index.html` にリダイレクトされていた問題を修正。`onAuthStateChange` でセッション確立を待ち、ハッシュがある場合は即リダイレクトしないように変更 | CRITICAL |
+| `frontend/signup-success.html` | 新規登録完了ページを新規作成。確認メールの案内とログイン画面への戻りリンクを表示 | MEDIUM |
+| `frontend/js/auth.js:82` | サインアップ成功時のメッセージ表示を `signup-success.html` へのリダイレクトに変更 | MEDIUM |
+| `frontend/css/style.css` | 登録完了ページ用のスタイル（`.signup-success-card`, `.success-icon` 等）を追加 | LOW |

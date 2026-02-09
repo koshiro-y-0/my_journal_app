@@ -79,7 +79,8 @@ document.getElementById('signup-form').addEventListener('submit', async (e) => {
             return;
         }
 
-        showSuccess('アカウントを作成しました！メールを確認してください。');
+        // 登録完了ページにリダイレクト
+        window.location.href = 'signup-success.html';
     } catch (err) {
         showError('アカウント作成に失敗しました。もう一度お試しください。');
     }
