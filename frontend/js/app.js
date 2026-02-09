@@ -3,11 +3,11 @@
  * 未ログイン時はログイン画面にリダイレクト
  */
 
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // === 認証チェック・アプリ初期化 ===
 (async () => {
-    const { data: { session } } = await supabase.auth.getSession();
+    const { data: { session } } = await supabaseClient.auth.getSession();
 
     if (!session) {
         // 未ログイン → ログイン画面へ
@@ -38,7 +38,7 @@ const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 })();
 
 // === 認証状態の変化を監視 ===
-supabase.auth.onAuthStateChange((event, session) => {
+supabaseClient.auth.onAuthStateChange((event, session) => {
     if (event === 'SIGNED_OUT') {
         window.location.href = 'index.html';
     }
@@ -46,7 +46,7 @@ supabase.auth.onAuthStateChange((event, session) => {
 
 // === ログアウト ===
 document.getElementById('logout-btn').addEventListener('click', async () => {
-    await supabase.auth.signOut();
+    await supabaseClient.auth.signOut();
     window.location.href = 'index.html';
 });
 
@@ -54,7 +54,7 @@ document.getElementById('logout-btn').addEventListener('click', async () => {
  * Django APIにリクエストを送る際のヘッダーを取得
  */
 async function getAuthHeaders() {
-    const { data: { session } } = await supabase.auth.getSession();
+    const { data: { session } } = await supabaseClient.auth.getSession();
     if (!session) return {};
     return {
         'Authorization': `Bearer ${session.access_token}`,

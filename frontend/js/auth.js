@@ -4,7 +4,7 @@
  */
 
 // Supabaseクライアントの初期化
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // === タブ切り替え ===
 document.querySelectorAll('.auth-tab').forEach(tab => {
@@ -32,7 +32,7 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
     const password = document.getElementById('login-password').value;
 
     try {
-        const { data, error } = await supabase.auth.signInWithPassword({
+        const { data, error } = await supabaseClient.auth.signInWithPassword({
             email: email,
             password: password,
         });
@@ -65,7 +65,7 @@ document.getElementById('signup-form').addEventListener('submit', async (e) => {
     }
 
     try {
-        const { data, error } = await supabase.auth.signUp({
+        const { data, error } = await supabaseClient.auth.signUp({
             email: email,
             password: password,
         });
@@ -86,7 +86,7 @@ document.getElementById('google-login-btn').addEventListener('click', async () =
     hideMessages();
 
     try {
-        const { data, error } = await supabase.auth.signInWithOAuth({
+        const { data, error } = await supabaseClient.auth.signInWithOAuth({
             provider: 'google',
             options: {
                 redirectTo: window.location.origin + '/app.html',
@@ -102,7 +102,7 @@ document.getElementById('google-login-btn').addEventListener('click', async () =
 });
 
 // === 認証状態の監視 ===
-supabase.auth.onAuthStateChange((event, session) => {
+supabaseClient.auth.onAuthStateChange((event, session) => {
     if (event === 'SIGNED_IN' && session) {
         // ログイン済みならメインアプリへリダイレクト
         window.location.href = 'app.html';
@@ -111,7 +111,7 @@ supabase.auth.onAuthStateChange((event, session) => {
 
 // ページ読み込み時に認証状態をチェック
 (async () => {
-    const { data: { session } } = await supabase.auth.getSession();
+    const { data: { session } } = await supabaseClient.auth.getSession();
     if (session) {
         window.location.href = 'app.html';
     }

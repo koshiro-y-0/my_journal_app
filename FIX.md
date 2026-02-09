@@ -31,9 +31,19 @@
 
 ---
 
-## 今回 - 新規登録ボタンが押せない問題 + Google OAuth URL修正
+## 59b971f - 新規登録ボタンが押せない問題 + Google OAuth URL修正
 
 | ファイル | 修正内容 | 重要度 |
 |---------|---------|--------|
 | `frontend/js/config.js:3` | `SUPABASE_ANON_KEY` が1文字間違っていた（`s2g` → `s0g`）。これにより `supabase.createClient()` が失敗し、タブ切り替え等のイベントリスナーが全く登録されず、新規登録ボタンが反応しなかった | CRITICAL |
 | `frontend/js/auth.js:92` | Google OAuthのリダイレクトURLを `/frontend/app.html` → `/app.html` に修正。Django配信では `/frontend/` プレフィックスが不要 | MEDIUM |
+
+---
+
+## 今回 - Supabase変数名の衝突でJS全体が動かない問題
+
+| ファイル | 修正内容 | 重要度 |
+|---------|---------|--------|
+| `frontend/js/auth.js` | `const supabase` → `const supabaseClient` にリネーム。Supabase CDNが `window.supabase` を作るため、同名の `const supabase` 宣言が `SyntaxError: Identifier 'supabase' has already been declared` を起こし、タブ切り替え含む全JSが動かなかった | CRITICAL |
+| `frontend/js/app.js` | 同上。`const supabase` → `const supabaseClient` にリネーム | CRITICAL |
+| `frontend/js/journal.js:92` | `supabase.auth.getSession()` → `supabaseClient.auth.getSession()` に修正 | CRITICAL |

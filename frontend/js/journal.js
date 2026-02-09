@@ -89,7 +89,7 @@ async function uploadImage(file) {
     progressEl.style.display = 'flex';
 
     try {
-        const { data: { session } } = await supabase.auth.getSession();
+        const { data: { session } } = await supabaseClient.auth.getSession();
         if (!session) return;
 
         const formData = new FormData();
