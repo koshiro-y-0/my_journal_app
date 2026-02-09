@@ -22,9 +22,18 @@
 
 ---
 
-## 今回 - Django フロントエンド配信 + CORS修正
+## 160e4e0 - Django フロントエンド配信 + CORS修正
 
 | ファイル | 修正内容 | 重要度 |
 |---------|---------|--------|
 | `backend/config/urls.py` | 開発時（`DEBUG=True`）にDjangoサーバーから `frontend/` ディレクトリの静的ファイルを配信するルーティングを追加。`http://localhost:8000` でログイン画面が開けるようになった | HIGH |
 | `backend/config/settings.py:55-56` | CORS許可オリジンに `http://localhost:8000` と `http://127.0.0.1:8000` を追加 | MEDIUM |
+
+---
+
+## 今回 - 新規登録ボタンが押せない問題 + Google OAuth URL修正
+
+| ファイル | 修正内容 | 重要度 |
+|---------|---------|--------|
+| `frontend/js/config.js:3` | `SUPABASE_ANON_KEY` が1文字間違っていた（`s2g` → `s0g`）。これにより `supabase.createClient()` が失敗し、タブ切り替え等のイベントリスナーが全く登録されず、新規登録ボタンが反応しなかった | CRITICAL |
+| `frontend/js/auth.js:92` | Google OAuthのリダイレクトURLを `/frontend/app.html` → `/app.html` に修正。Django配信では `/frontend/` プレフィックスが不要 | MEDIUM |

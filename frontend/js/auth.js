@@ -89,7 +89,7 @@ document.getElementById('google-login-btn').addEventListener('click', async () =
         const { data, error } = await supabase.auth.signInWithOAuth({
             provider: 'google',
             options: {
-                redirectTo: window.location.origin + '/frontend/app.html',
+                redirectTo: window.location.origin + '/app.html',
             },
         });
 
