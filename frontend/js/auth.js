@@ -18,6 +18,10 @@ document.querySelectorAll('.auth-tab').forEach(tab => {
         document.getElementById('login-form').style.display = tabName === 'login' ? 'block' : 'none';
         document.getElementById('signup-form').style.display = tabName === 'signup' ? 'block' : 'none';
 
+        // Googleボタンのテキストを切り替え
+        const googleBtnText = document.getElementById('google-btn-text');
+        googleBtnText.textContent = tabName === 'login' ? 'Googleでログイン' : 'Googleで新規登録';
+
         // メッセージをクリア
         hideMessages();
     });

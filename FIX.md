@@ -40,10 +40,19 @@
 
 ---
 
-## 今回 - Supabase変数名の衝突でJS全体が動かない問題
+## 39f95e0 - Supabase変数名の衝突でJS全体が動かない問題
 
 | ファイル | 修正内容 | 重要度 |
 |---------|---------|--------|
 | `frontend/js/auth.js` | `const supabase` → `const supabaseClient` にリネーム。Supabase CDNが `window.supabase` を作るため、同名の `const supabase` 宣言が `SyntaxError: Identifier 'supabase' has already been declared` を起こし、タブ切り替え含む全JSが動かなかった | CRITICAL |
 | `frontend/js/app.js` | 同上。`const supabase` → `const supabaseClient` にリネーム | CRITICAL |
 | `frontend/js/journal.js:92` | `supabase.auth.getSession()` → `supabaseClient.auth.getSession()` に修正 | CRITICAL |
+
+---
+
+## 今回 - 新規登録タブでもGoogleボタンを使えるように
+
+| ファイル | 修正内容 | 重要度 |
+|---------|---------|--------|
+| `frontend/index.html:67` | Googleボタンのテキストを `<span id="google-btn-text">` で囲み、タブ切り替えでテキスト変更可能にした | LOW |
+| `frontend/js/auth.js:21-23` | タブ切り替え時にGoogleボタンのテキストを「Googleでログイン」/「Googleで新規登録」に切り替える処理を追加 | MEDIUM |
