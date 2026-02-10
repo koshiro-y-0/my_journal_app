@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>マイプロフィール - My Journal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=M+PLUS+Rounded+1c:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="app-page">
+    <!-- ハンバーガーメニュー -->
+    <nav class="side-drawer" id="side-drawer">
+        <div class="drawer-header">
+            <span class="drawer-title">My Journal</span>
+            <button id="drawer-close-btn" class="drawer-close">&times;</button>
+        </div>
+        <ul class="drawer-nav">
+            <li><a href="app.html" class="drawer-link"><span class="drawer-icon">&#9998;</span>日記を書く</a></li>
+            <li><a href="calendar.html" class="drawer-link"><span class="drawer-icon">&#128197;</span>カレンダー</a></li>
+            <li><a href="mood.html" class="drawer-link"><span class="drawer-icon">&#128200;</span>気分の推移</a></li>
+            <li><a href="profile.html" class="drawer-link active"><span class="drawer-icon">&#128100;</span>マイプロフィール</a></li>
+        </ul>
+    </nav>
+    <div class="menu-overlay" id="menu-overlay"></div>
+
+    <!-- ヘッダー -->
+    <header class="app-header">
+        <div class="header-left">
+            <button id="hamburger-btn" class="hamburger-btn" title="メニュー">
+                <span></span><span></span><span></span>
+            </button>
+            <h1>マイプロフィール</h1>
+        </div>
+        <div class="header-user">
+            <span id="user-email"></span>
+        </div>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main class="page-content">
+        <div class="profile-card">
+            <div class="profile-avatar" id="profile-avatar"></div>
+            <p class="profile-email" id="profile-email">読み込み中...</p>
+            <p class="profile-meta" id="profile-meta"></p>
+            <div class="profile-actions">
+                <button id="profile-logout-btn" class="btn btn-primary">ログアウト</button>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
+    <script src="js/profile.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

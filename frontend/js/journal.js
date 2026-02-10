@@ -17,11 +17,22 @@ const MOOD_EMOJIS = {
 
 // === 初期化 ===
 function initJournal() {
+    // app.html以外（calendar.htmlなど）ではフォームが存在しないので初期化しない
+    if (!document.getElementById('journal-form-container')) return;
+
     setupMoodSelector();
     setupImageUpload();
     setupFormEvents();
     setupViewEvents();
-    loadTodayJournal();
+
+    // URLパラメータ ?date=YYYY-MM-DD があればその日の日記を表示
+    const urlParams = new URLSearchParams(window.location.search);
+    const dateParam = urlParams.get('date');
+    if (dateParam && /^\d{4}-\d{2}-\d{2}$/.test(dateParam)) {
+        loadJournalByDate(dateParam);
+    } else {
+        loadTodayJournal();
+    }
 }
 
 // === 気分スコアスライダー ===
@@ -128,11 +139,11 @@ async function uploadImage(file) {
 
 // === フォームイベント ===
 function setupFormEvents() {
-    const form = document.getElementById('journal-form');
+    // 保存ボタン（右ページにある type="button" のボタン）
+    const submitBtn = document.getElementById('journal-submit-btn');
     const cancelBtn = document.getElementById('journal-cancel-btn');
 
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
+    submitBtn.addEventListener('click', async () => {
         await saveJournal();
     });
 
@@ -255,11 +266,11 @@ async function saveJournal() {
         showJournalView(data);
         showJournalMessage(wasEditing ? '日記を更新しました' : '日記を保存しました', 'success');
 
-        // カレンダーの更新を通知（STEP 6で実装）
+        // カレンダーの更新を通知
         if (typeof refreshCalendar === 'function') {
             refreshCalendar();
         }
-        // 気分グラフの更新を通知（STEP 7で実装）
+        // 気分グラフの更新を通知
         if (typeof refreshMoodChart === 'function') {
             refreshMoodChart();
         }
@@ -322,14 +333,24 @@ function startEditing(journal) {
     document.getElementById('journal-submit-btn').textContent = '更新する';
     document.getElementById('journal-cancel-btn').style.display = 'inline-flex';
 
+    // 左ページ: フォーム表示
     document.getElementById('journal-form-container').style.display = 'block';
     document.getElementById('journal-view-container').style.display = 'none';
+
+    // 右ページ: フォーム表示
+    document.getElementById('journal-right-form').style.display = 'block';
+    document.getElementById('journal-right-view').style.display = 'none';
 }
 
 // === 日記表示モード ===
 function showJournalView(journal) {
+    // 左ページ: 本文表示
     document.getElementById('journal-form-container').style.display = 'none';
     document.getElementById('journal-view-container').style.display = 'block';
+
+    // 右ページ: 気分・画像・操作ボタン表示
+    document.getElementById('journal-right-form').style.display = 'none';
+    document.getElementById('journal-right-view').style.display = 'flex';
 
     // 本文
     const contentEl = document.getElementById('journal-view-content');
@@ -360,8 +381,15 @@ function showJournalView(journal) {
 // === 日記入力フォームを表示 ===
 function showJournalForm(date) {
     resetForm();
+
+    // 左ページ: フォーム表示
     document.getElementById('journal-form-container').style.display = 'block';
     document.getElementById('journal-view-container').style.display = 'none';
+
+    // 右ページ: フォーム表示
+    document.getElementById('journal-right-form').style.display = 'block';
+    document.getElementById('journal-right-view').style.display = 'none';
+
     updateDateDisplay(date);
 
     // 今日以外の日付は注意書きを表示
@@ -394,6 +422,11 @@ function showLoading(show) {
     if (show) {
         document.getElementById('journal-form-container').style.display = 'none';
         document.getElementById('journal-view-container').style.display = 'none';
+        // 右ページも非表示
+        const rightForm = document.getElementById('journal-right-form');
+        const rightView = document.getElementById('journal-right-view');
+        if (rightForm) rightForm.style.display = 'none';
+        if (rightView) rightView.style.display = 'none';
     }
 }
 

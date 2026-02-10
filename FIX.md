@@ -92,7 +92,30 @@
 
 ---
 
-## 今回 - 画像選択ボタンが反応しない問題
+## 今回 - UI大幅リデザイン: 本の見開き風レイアウト + ハンバーガーメニュー
+
+### レイアウト変更
+
+| ファイル | 修正内容 | 重要度 |
+|---------|---------|--------|
+| `frontend/app.html` | 3カラムレイアウト（カレンダー/日記/気分グラフ）を削除。「開いた本の見開き」レイアウトに変更。左ページ=日記本文、右ページ=気分スコア+画像。ハンバーガーメニュー（サイドドロワー）を追加 | HIGH |
+| `frontend/css/style.css` | 本の見開き風CSS（`.book`, `.book-page-left`, `.book-page-right`, `.book-spine`）を追加。紙質感の罫線テクスチャ、綴じ目の影、背表紙のグラデーション。ハンバーガーメニュースタイル（`.side-drawer`, `.menu-overlay`, `.hamburger-btn`）を追加。レスポンシブ対応（768px以下で縦積み） | HIGH |
+| `frontend/js/app.js` | ハンバーガーメニューのopen/close処理を追加。`logout-btn`のnullチェック追加（プロフィールページにはlogout-btnがないため）。`initProfile()`の呼び出しを追加 | HIGH |
+| `frontend/js/journal.js` | フォームが左右ページに分割されたことに対応。`journal-right-form`/`journal-right-view`の表示切り替えを追加。`form submit`イベント→`button click`イベントに変更。URLパラメータ`?date=YYYY-MM-DD`対応を追加。`initJournal()`にDOM存在チェックを追加（calendar.htmlでも読み込まれるため） | HIGH |
+
+### 新規ページ
+
+| ファイル | 修正内容 | 重要度 |
+|---------|---------|--------|
+| `frontend/calendar.html` | カレンダー専用ページを新規作成。ヘッダー+ハンバーガーメニュー+大きなカレンダー表示。日付クリックで`app.html?date=YYYY-MM-DD`に遷移 | HIGH |
+| `frontend/mood.html` | 気分推移グラフ専用ページを新規作成。Chart.js読み込み、大きなグラフ表示 | HIGH |
+| `frontend/profile.html` | プロフィールページを新規作成。アバター（メール頭文字）、メールアドレス、登録日表示、ログアウトボタン | HIGH |
+| `frontend/js/profile.js` | プロフィールページのロジック。`supabaseClient.auth.getUser()`でユーザー情報取得・表示 | MEDIUM |
+| `frontend/js/calendar.js` | 日付クリック時、`loadJournalByDate`が存在しない場合（calendar.html上）は`app.html?date=`に遷移するよう変更 | MEDIUM |
+
+---
+
+## 画像選択ボタンが反応しない問題
 
 | ファイル | 修正内容 | 重要度 |
 |---------|---------|--------|

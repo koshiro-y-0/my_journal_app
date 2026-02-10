@@ -96,8 +96,12 @@ function renderDays() {
             // 選択状態を更新
             grid.querySelectorAll('.cal-day').forEach(c => c.classList.remove('cal-selected'));
             cell.classList.add('cal-selected');
-            // 日記を読み込み
-            loadJournalByDate(date);
+            // app.html上ならそのまま日記を読み込み、それ以外ならapp.htmlに遷移
+            if (typeof loadJournalByDate === 'function') {
+                loadJournalByDate(date);
+            } else {
+                window.location.href = `app.html?date=${date}`;
+            }
         });
     });
 }
