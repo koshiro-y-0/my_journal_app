@@ -528,6 +528,10 @@ body {
     position: relative;
 }
 
+#image-select-btn {
+    cursor: pointer;
+}
+
 .btn-outline {
     background: transparent;
     color: var(--color-primary);

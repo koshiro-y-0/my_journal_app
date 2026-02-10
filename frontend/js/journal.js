@@ -48,7 +48,7 @@ function setupImageUpload() {
     const preview = document.getElementById('image-preview');
     const removeBtn = document.getElementById('image-remove-btn');
 
-    selectBtn.addEventListener('click', () => fileInput.click());
+    // labelのfor属性でファイルダイアログが開くため、JSでのclick()は不要
 
     fileInput.addEventListener('change', async (e) => {
         const file = e.target.files[0];
@@ -71,7 +71,12 @@ function setupImageUpload() {
         reader.readAsDataURL(file);
 
         // アップロード
-        await uploadImage(file);
+        try {
+            await uploadImage(file);
+        } catch (err) {
+            console.error('[ERROR] uploadImage failed:', err);
+            showJournalMessage('画像アップロードに失敗しました: ' + err.message, 'error');
+        }
     });
 
     removeBtn.addEventListener('click', () => {
@@ -79,7 +84,7 @@ function setupImageUpload() {
         fileInput.value = '';
         previewContainer.style.display = 'none';
         preview.src = '';
-        selectBtn.style.display = 'inline-flex';
+        selectBtn.style.display = '';
     });
 }
 
@@ -115,7 +120,7 @@ async function uploadImage(file) {
         showJournalMessage(err.message, 'error');
         // プレビューをリセット
         document.getElementById('image-preview-container').style.display = 'none';
-        document.getElementById('image-select-btn').style.display = 'inline-flex';
+        document.getElementById('image-select-btn').style.display = '';
     } finally {
         progressEl.style.display = 'none';
     }
@@ -311,7 +316,7 @@ function startEditing(journal) {
     } else {
         uploadedImageUrl = null;
         document.getElementById('image-preview-container').style.display = 'none';
-        document.getElementById('image-select-btn').style.display = 'inline-flex';
+        document.getElementById('image-select-btn').style.display = '';
     }
 
     document.getElementById('journal-submit-btn').textContent = '更新する';
@@ -375,7 +380,7 @@ function resetForm() {
     document.getElementById('mood-score').dispatchEvent(new Event('input'));
     document.getElementById('journal-image').value = '';
     document.getElementById('image-preview-container').style.display = 'none';
-    document.getElementById('image-select-btn').style.display = 'inline-flex';
+    document.getElementById('image-select-btn').style.display = '';
     document.getElementById('journal-submit-btn').textContent = '日記を保存';
     document.getElementById('journal-cancel-btn').style.display = 'none';
     uploadedImageUrl = null;

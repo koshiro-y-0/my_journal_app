@@ -89,3 +89,16 @@
 | `frontend/css/style.css` | パスワード設定ページ用のローディングスタイル、サインアップヒントのスタイルを追加 | LOW |
 
 **Supabase設定**: Redirect URLsに `http://localhost:8000/set-password.html` の追加が必要
+
+---
+
+## 今回 - 画像選択ボタンが反応しない問題
+
+| ファイル | 修正内容 | 重要度 |
+|---------|---------|--------|
+| `frontend/app.html:59` | 上部の `<label for="journal-image">` の `for` 属性を削除。同じ `for` を持つ `label` が2つあり、クリックイベントが競合していた | HIGH |
+| `frontend/app.html:61` | `input[type=file]` の `hidden` → `position: absolute; clip: rect(0,0,0,0); opacity: 0` に変更。`display: none` や `pointer-events: none` ではブラウザがファイルダイアログを開けない | HIGH |
+| `frontend/app.html:62` | `<button>` → `<label for="journal-image">` に変更。ブラウザネイティブの `label-input` 紐付けでファイルダイアログを開く方式に変更 | HIGH |
+| `frontend/js/journal.js` | `selectBtn.addEventListener('click', ...)` のJS経由 `fileInput.click()` を削除。`label` のネイティブ機能に委譲 | MEDIUM |
+| `frontend/js/journal.js` | `selectBtn.style.display = 'inline-flex'` → `''` に修正。`label` 要素には `inline-flex` が不適切 | LOW |
+| `frontend/css/style.css` | `#image-select-btn { cursor: pointer }` を追加 | LOW |
