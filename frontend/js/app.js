@@ -12,6 +12,11 @@ function initApp(session) {
     if (appInitialized) return;
     appInitialized = true;
 
+    // URLハッシュをクリア（OAuthトークンが残らないように）
+    if (window.location.hash) {
+        history.replaceState(null, '', window.location.pathname);
+    }
+
     // ユーザーのメールアドレスを表示
     const userEmailEl = document.getElementById('user-email');
     if (userEmailEl) {
@@ -34,17 +39,21 @@ function initApp(session) {
     }
 }
 
-// === 認証状態の変化を監視 ===
-supabaseClient.auth.onAuthStateChange((event, session) => {
-    if (event === 'SIGNED_IN' && session) {
-        initApp(session);
-    } else if (event === 'SIGNED_OUT') {
-        window.location.href = 'index.html';
-    }
-});
-
 // === 認証チェック・アプリ初期化 ===
 (async () => {
+    // onAuthStateChangeを先に登録して、OAuthハッシュからのセッション確立を拾う
+    const { data: { subscription } } = supabaseClient.auth.onAuthStateChange((event, session) => {
+        if ((event === 'SIGNED_IN' || event === 'INITIAL_SESSION' || event === 'TOKEN_REFRESHED') && session) {
+            initApp(session);
+        } else if (event === 'SIGNED_OUT') {
+            if (appInitialized) {
+                // 初期化済みの場合のみリダイレクト（ユーザーがログアウトした）
+                window.location.href = 'index.html';
+            }
+        }
+    });
+
+    // 明示的にセッションを取得（ハッシュがない通常アクセスの場合）
     const { data: { session } } = await supabaseClient.auth.getSession();
 
     if (session) {
@@ -52,14 +61,17 @@ supabaseClient.auth.onAuthStateChange((event, session) => {
     } else if (!window.location.hash) {
         // ハッシュフラグメントがない = OAuthリダイレクト直後ではない → 未ログイン
         window.location.href = 'index.html';
+        return;
     }
-    // ハッシュフラグメントがある場合はonAuthStateChangeがセッション確立を処理するのを待つ
-    // 5秒以内にセッションが確立されなければログイン画面に戻す
-    setTimeout(() => {
-        if (!appInitialized) {
-            window.location.href = 'index.html';
-        }
-    }, 5000);
+
+    // OAuthリダイレクトの場合、セッション確立を待つ（最大5秒）
+    if (!appInitialized) {
+        setTimeout(() => {
+            if (!appInitialized) {
+                window.location.href = 'index.html';
+            }
+        }, 5000);
+    }
 })();
 
 // === ログアウト ===

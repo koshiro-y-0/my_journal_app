@@ -53,25 +53,20 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
     }
 });
 
-// === サインアップ処理 ===
+// === サインアップ処理（Magic Linkでメール確認） ===
 document.getElementById('signup-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     hideMessages();
 
     const email = document.getElementById('signup-email').value;
-    const password = document.getElementById('signup-password').value;
-    const passwordConfirm = document.getElementById('signup-password-confirm').value;
-
-    // パスワード一致チェック
-    if (password !== passwordConfirm) {
-        showError('パスワードが一致しません。');
-        return;
-    }
 
     try {
-        const { data, error } = await supabaseClient.auth.signUp({
+        // Magic Linkを送信（パスワード設定ページにリダイレクト）
+        const { data, error } = await supabaseClient.auth.signInWithOtp({
             email: email,
-            password: password,
+            options: {
+                emailRedirectTo: window.location.origin + '/set-password.html',
+            },
         });
 
         if (error) {
@@ -82,7 +77,7 @@ document.getElementById('signup-form').addEventListener('submit', async (e) => {
         // 登録完了ページにリダイレクト
         window.location.href = 'signup-success.html';
     } catch (err) {
-        showError('アカウント作成に失敗しました。もう一度お試しください。');
+        showError('確認メールの送信に失敗しました。もう一度お試しください。');
     }
 });
 

@@ -59,7 +59,7 @@
 
 ---
 
-## 今回 - Googleログイン後にログイン画面に戻る問題 + 登録完了ページ追加
+## 5f7c5f5 - Googleログイン後にログイン画面に戻る問題 + 登録完了ページ追加
 
 | ファイル | 修正内容 | 重要度 |
 |---------|---------|--------|
@@ -67,3 +67,25 @@
 | `frontend/signup-success.html` | 新規登録完了ページを新規作成。確認メールの案内とログイン画面への戻りリンクを表示 | MEDIUM |
 | `frontend/js/auth.js:82` | サインアップ成功時のメッセージ表示を `signup-success.html` へのリダイレクトに変更 | MEDIUM |
 | `frontend/css/style.css` | 登録完了ページ用のスタイル（`.signup-success-card`, `.success-icon` 等）を追加 | LOW |
+
+---
+
+## 今回 - ログイン後即ログアウト問題 + 新規登録フロー変更
+
+### ログイン後即ログアウト問題
+
+| ファイル | 修正内容 | 重要度 |
+|---------|---------|--------|
+| `frontend/js/app.js` | `onAuthStateChange` で `INITIAL_SESSION` / `TOKEN_REFRESHED` イベントも処理するように修正。また `SIGNED_OUT` イベントでは `appInitialized` が `true` の場合のみリダイレクトし、初期ロード時の誤リダイレクトを防止。OAuthハッシュもセッション確立後にクリア | CRITICAL |
+
+### 新規登録フロー変更（メールのみ → 確認メール → パスワード設定）
+
+| ファイル | 修正内容 | 重要度 |
+|---------|---------|--------|
+| `frontend/index.html` | サインアップフォームからパスワード欄を削除。メールアドレスのみの入力に変更。ボタンテキストも「確認メールを送信」に変更 | HIGH |
+| `frontend/js/auth.js` | サインアップ処理を `signUp` → `signInWithOtp`（Magic Link）に変更。メール確認後 `set-password.html` にリダイレクトする設定 | HIGH |
+| `frontend/set-password.html` | パスワード設定ページを新規作成。メール内リンクからのリダイレクト先。セッション確立後にパスワード入力フォームを表示し、`updateUser` でパスワードを設定 | HIGH |
+| `frontend/signup-success.html` | メッセージを更新。「パスワード設定ページに移動します」という案内に変更 | LOW |
+| `frontend/css/style.css` | パスワード設定ページ用のローディングスタイル、サインアップヒントのスタイルを追加 | LOW |
+
+**Supabase設定**: Redirect URLsに `http://localhost:8000/set-password.html` の追加が必要
